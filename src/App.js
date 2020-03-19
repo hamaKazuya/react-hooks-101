@@ -1,32 +1,27 @@
 import React, { useState } from 'react'
 
-const App = () => {
-  const [ count, setCount ] = useState(1)
-  
-  const increment = () => setCount(count + 1)
-  const decrement = () => setCount(count - 1)
-  const increment2 = () => setCount(previousCount => previousCount + 1)
-  const reset = () => setCount(0)
-  const double = () => setCount(count*2)
-  const divide3 = () => setCount(previousCount => {
-    return previousCount % 3 === 0 ? previousCount / 3 : previousCount
-  })
+const App = props => {
+  const [name, setName] = useState(props.name)
+  const [price, setPrice] = useState(props.price)
 
-  // jsx
+  const reset = () => {
+    setName(props.name)
+    setPrice(props.price)
+  }
   return (
-    <React.Fragment>
-      <div>
-        count: { count }
-      </div>
-      <button onClick={increment}>+1</button>
-      <button onClick={decrement}>-1</button>
-      <button onClick={increment2}>+1</button>
-
+    <>
+      <p>現在の{name}は{price}円です。</p>
+      <button onClick={() => setPrice(price-1)}>-1</button>
+      <button onClick={() => setPrice(price+1)}>+1</button>
       <button onClick={reset}>reset</button>
-      <button onClick={double}>double</button>
-      <button onClick={divide3}>3の倍数のときだけ3で割る</button>
-    </React.Fragment>
+      <input value={name} onChange={e => setName(e.target.value)} />
+    </>
   )
+}
+
+App.defaultProps = {
+  name: '初期名',
+  price: 1000
 }
 
 export default App
